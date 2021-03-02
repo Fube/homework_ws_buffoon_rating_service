@@ -6,7 +6,9 @@ import java.util.*
 @NoArgsConstructor
 data class RatingGUIDLessDTO(
     @JsonProperty(value = "jokeGUID")
-    var jokeGUID: UUID,
+    var jokeGUID: UUID?,
     @JsonProperty(value = "opinion")
-    var opinion:Boolean
-)
+    var opinion:Boolean?
+){
+    constructor(): this(null, null)
+}

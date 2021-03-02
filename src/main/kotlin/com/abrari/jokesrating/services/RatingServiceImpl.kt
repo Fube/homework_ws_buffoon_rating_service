@@ -6,10 +6,13 @@ import com.abrari.jokesrating.dtos.RatingIDLessDTO
 import com.abrari.jokesrating.exceptions.SQLNotFoundException
 import com.abrari.jokesrating.models.Rating
 import com.abrari.jokesrating.repos.RatingsRepo
+import com.abrari.jokesrating.utils.BiDirectionalMapping
 import com.abrari.jokesrating.utils.BiDirectionalMappingImpl
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.github.fge.jsonpatch.JsonPatch
+import org.modelmapper.ModelMapper
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
 import java.lang.NullPointerException
@@ -19,10 +22,10 @@ import java.util.*
 @Service
 class RatingServiceImpl(
     val ratingsRepo: RatingsRepo,
-    val ratingToIDLess: BiDirectionalMappingImpl<Rating, RatingIDLessDTO>,
-    val ratingToGUIDLess: BiDirectionalMappingImpl<Rating, RatingGUIDLessDTO>,
+    val ratingToIDLess: BiDirectionalMapping<Rating, RatingIDLessDTO>,
+    val ratingToGUIDLess: BiDirectionalMapping<Rating, RatingGUIDLessDTO>,
     val objectMapper: ObjectMapper,
-    val jokeService: JokeService,
+    val jokeService: JokeService
 ):RatingService {
 
     override fun getAllRatings(): Iterable<RatingIDLessDTO> {
@@ -48,9 +51,10 @@ class RatingServiceImpl(
 
     override fun addRating(rating: RatingGUIDLessDTO): RatingIDLessDTO {
 
-        jokeService.getJokeByGUID(rating.jokeGUID)
+        rating.jokeGUID?.let { jokeService.getJokeByGUID(it) }
 
         val asRating:Rating = ratingToGUIDLess.mapToLeft(rating)
+        asRating.guid = UUID.randomUUID() // Shouldn't have to do this but I guess I do
 
         val createdRating:Rating = ratingsRepo.save(asRating)
 
@@ -90,9 +94,9 @@ class RatingServiceImpl(
         mapped.id = rating.id
         mapped.guid = rating.guid
 
-        ratingsRepo.save(mapped)
-
         if(mapped.jokeGUID != rating.jokeGUID)throw SQLIntegrityConstraintViolationException("Cannot update Joke GUID explicitly")
+
+        ratingsRepo.save(mapped)
 
         return ratingToIDLess.mapToRight(mapped)
     }

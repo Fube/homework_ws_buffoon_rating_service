@@ -39,7 +39,7 @@ class BeanConfig {
 
         val temp = BiDirectionalMappingImpl<Rating, RatingGUIDLessDTO>()
         temp.classOfA = Rating::class.java
-        temp.classOfB = RatingGUIDLessDTO::class.java
+        temp.classOfB =RatingGUIDLessDTO::class.java
 
         return temp;
     }
