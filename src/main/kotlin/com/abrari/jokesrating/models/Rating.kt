@@ -1,0 +1,21 @@
+package com.abrari.jokesrating.models
+
+import lombok.NoArgsConstructor
+import org.hibernate.annotations.GenericGenerator
+import java.util.*
+import javax.persistence.*
+
+@NoArgsConstructor
+@Entity
+@Table(name = "ratings")
+data class Rating(
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    var id:Int,
+    @Column(name = "joke_guid", nullable = false)
+    var jokeGUID:UUID,
+    @GeneratedValue(generator = "uuid2") @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(unique = true, nullable = false, columnDefinition = "BINARY(16)")
+    var guid:UUID = UUID.randomUUID(),
+    var opinion:Boolean
+)

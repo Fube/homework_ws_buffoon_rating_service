@@ -1,0 +1,16 @@
+package com.abrari.jokesrating.repos
+
+import com.abrari.jokesrating.dtos.RatingIDLessDTO
+import com.abrari.jokesrating.models.Rating
+import org.springframework.data.jpa.repository.JpaRepository
+import org.springframework.data.jpa.repository.Query
+import org.springframework.data.repository.query.Param
+import org.springframework.stereotype.Repository
+import java.util.*
+
+@Repository
+interface RatingsRepo:JpaRepository<Rating, Int> {
+
+    @Query("from Rating where guid=(:guid)")
+    fun findByGUID(@Param(value = "guid") guid: UUID): Optional<Rating>
+}
