@@ -15,6 +15,7 @@ import org.modelmapper.ModelMapper
 import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.data.domain.PageRequest
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import java.lang.NullPointerException
 import java.sql.SQLIntegrityConstraintViolationException
 import java.util.*
@@ -99,6 +100,11 @@ class RatingServiceImpl(
         ratingsRepo.save(mapped)
 
         return ratingToIDLess.mapToRight(mapped)
+    }
+
+    @Transactional
+    override fun deleteAllFor(guid: UUID) {
+        ratingsRepo.deleteAllByJokeGUID(guid)
     }
 
 

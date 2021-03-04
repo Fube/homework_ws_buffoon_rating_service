@@ -19,4 +19,5 @@ interface RatingService {
     @Throws(SQLException::class) fun deleteRatingByGUID(guid:UUID):RatingIDLessDTO
     @Throws(SQLException::class, JsonPatchException::class) fun partiallyUpdateRatingByGUID(guid:UUID, patch: JsonPatch):RatingIDLessDTO
     @Throws(SQLException::class) fun updateRating(guid: UUID, guidLessDTO: RatingGUIDLessDTO):RatingIDLessDTO
+    fun deleteAllFor(guid: UUID)
 }

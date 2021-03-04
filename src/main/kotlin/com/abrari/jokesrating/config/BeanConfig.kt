@@ -8,8 +8,11 @@ import com.abrari.jokesrating.services.JokeServiceCall
 import com.abrari.jokesrating.utils.BiDirectionalMapping
 import com.abrari.jokesrating.utils.BiDirectionalMappingImpl
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.rabbitmq.client.Channel
+import com.rabbitmq.client.ConnectionFactory
 import io.github.cdimascio.dotenv.dotenv
 import org.modelmapper.ModelMapper
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import retrofit2.Retrofit
