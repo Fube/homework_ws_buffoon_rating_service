@@ -1,5 +1,6 @@
 package com.abrari.jokesrating.models
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import lombok.NoArgsConstructor
 import org.hibernate.annotations.GenericGenerator
 import java.util.*
@@ -17,5 +18,7 @@ data class Rating(
     @GeneratedValue(generator = "uuid2") @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(unique = true, nullable = false, columnDefinition = "BINARY(16)")
     var guid:UUID = UUID.randomUUID(),
+    @Column(name = "user_guid", nullable = false)
+    var userGUID:String?,
     var opinion:Boolean
 )

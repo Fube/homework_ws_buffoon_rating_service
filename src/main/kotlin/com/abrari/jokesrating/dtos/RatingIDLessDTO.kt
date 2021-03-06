@@ -10,9 +10,11 @@ data class RatingIDLessDTO(
     var jokeGUID: UUID?,
     @JsonProperty(value = "guid")
     var guid: UUID?,
+    @JsonProperty(value = "userGUID")
+    var userGUID:String?,
     @JsonProperty(value = "opinion")
     var opinion:Boolean?
 ){
 
-    constructor() : this(null, null, null)
+    constructor() : this(null, null, null, null)
 }

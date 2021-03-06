@@ -7,8 +7,10 @@ import java.util.*
 data class RatingGUIDLessDTO(
     @JsonProperty(value = "jokeGUID")
     var jokeGUID: UUID?,
+    @JsonProperty(value = "userGUID")
+    var userGUID:String?,
     @JsonProperty(value = "opinion")
-    var opinion:Boolean?
+    var opinion:Boolean?,
 ){
-    constructor(): this(null, null)
+    constructor(): this(null, null, null)
 }
