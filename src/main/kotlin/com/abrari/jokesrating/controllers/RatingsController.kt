@@ -26,6 +26,11 @@ class RatingsController(
         @PathVariable guid:UUID
     ) = ResponseEntity.ok(ratingService.getRatingByGUID(guid))
 
+    @GetMapping("/user/{guid}")
+    private fun getRating(
+            @PathVariable guid:String
+    ) = ResponseEntity.ok(ratingService.getAllRatingsForUser(guid))
+
     @PostMapping
     private fun addRating(
         @RequestBody rating:RatingGUIDLessDTO

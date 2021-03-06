@@ -46,6 +46,12 @@ class RatingServiceImpl(
         )
     }
 
+    override fun getAllRatingsForUser(guid: String): Iterable<RatingIDLessDTO> {
+        return ratingsRepo
+                .findAllByUserGUID(guid)
+                .map(ratingToIDLess::mapToRight)
+    }
+
     override fun getRatingById(id: Int): Rating = ratingsRepo.findById(id).orElseThrow { throw SQLNotFoundException("Rating not found") }
 
     override fun getRatingByGUID(guid: UUID): RatingIDLessDTO = ratingToIDLess.mapToRight(ratingsRepo.findByGUID(guid).orElseThrow{ throw SQLNotFoundException("Rating not found") })

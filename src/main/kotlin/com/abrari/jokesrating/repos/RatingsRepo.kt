@@ -18,4 +18,7 @@ interface RatingsRepo:JpaRepository<Rating, Int> {
     @Modifying
     @Query("delete from Rating where jokeGUID=(:guid)")
     fun deleteAllByJokeGUID(@Param(value = "guid") guid: UUID)
+
+    @Query("from Rating where userGUID=(:guid)")
+    fun findAllByUserGUID(@Param(value = "guid") guid: String): List<Rating>
 }

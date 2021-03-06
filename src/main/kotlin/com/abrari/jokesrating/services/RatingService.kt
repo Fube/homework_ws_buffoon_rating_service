@@ -7,12 +7,13 @@ import com.github.fge.jsonpatch.JsonPatch
 import com.github.fge.jsonpatch.JsonPatchException
 import java.sql.SQLException
 import java.util.*
-import kotlin.jvm.Throws
+import kotlin.Throws
 
 interface RatingService {
 
     fun getAllRatings():Iterable<RatingIDLessDTO>
     fun getAllRatings(page:Int, limit:Int):Map<String, Any>
+    @Throws(SQLException::class) fun getAllRatingsForUser(guid:String):Iterable<RatingIDLessDTO>
     @Throws(SQLException::class) fun getRatingById(id:Int):Rating
     @Throws(SQLException::class) fun getRatingByGUID(guid:UUID):RatingIDLessDTO
     @Throws(SQLException::class) fun addRating(rating:RatingGUIDLessDTO):RatingIDLessDTO
