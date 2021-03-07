@@ -21,4 +21,10 @@ interface RatingsRepo:JpaRepository<Rating, Int> {
 
     @Query("from Rating where userGUID=(:guid)")
     fun findAllByUserGUID(@Param(value = "guid") guid: String): List<Rating>
+
+    @Query("from Rating where userGUID=(:user) and jokeGUID=(:joke)")
+    fun findByUserGUIDAndJokeGUIDComposite(
+            @Param(value = "user") user: String?,
+            @Param(value = "joke") joke: UUID?
+    ): Rating?
 }

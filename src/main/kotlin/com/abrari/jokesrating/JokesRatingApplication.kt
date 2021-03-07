@@ -11,7 +11,7 @@ val env: Dotenv = Dotenv.configure().ignoreIfMalformed().ignoreIfMissing().load(
 
 enum class EnvVars(val value:String){
 
-    JOKE_SERVICE_BASE_URL(env["JOKE_SERVICE_BASE_URL"] ?: "localhost:8080"),
+    JOKE_SERVICE_BASE_URL(env["JOKE_SERVICE_BASE_URL"] ?: "http://localhost:8080"),
     JOKES_QUEUE_NAME(env["JOKES_QUEUE_NAME"] ?: "jokes"),
 }
 

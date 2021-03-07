@@ -56,11 +56,19 @@ class RatingServiceImpl(
 
     override fun getRatingByGUID(guid: UUID): RatingIDLessDTO = ratingToIDLess.mapToRight(ratingsRepo.findByGUID(guid).orElseThrow{ throw SQLNotFoundException("Rating not found") })
 
+    // Upsert
     override fun addRating(rating: RatingGUIDLessDTO): RatingIDLessDTO {
 
-        rating.jokeGUID?.let { jokeService.getJokeByGUID(it) }
-
         val asRating:Rating = ratingToGUIDLess.mapToLeft(rating)
+        val userUUID = rating.userGUID
+        val jokeUUID = rating.jokeGUID
+        val existing = ratingsRepo.findByUserGUIDAndJokeGUIDComposite(userUUID, jokeUUID);
+        if(existing != null) {
+
+            return updateRating(existing.guid, rating)
+        }
+
+        rating.jokeGUID?.let { jokeService.getJokeByGUID(it) }
         asRating.guid = UUID.randomUUID() // Shouldn't have to do this but I guess I do
 
         val createdRating:Rating = ratingsRepo.save(asRating)

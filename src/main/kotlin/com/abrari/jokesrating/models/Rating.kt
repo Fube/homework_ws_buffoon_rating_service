@@ -1,5 +1,6 @@
 package com.abrari.jokesrating.models
 
+import com.abrari.jokesrating.converters.IntegerToBooleanConverter
 import com.fasterxml.jackson.annotation.JsonProperty
 import lombok.NoArgsConstructor
 import org.hibernate.annotations.GenericGenerator
@@ -10,7 +11,7 @@ import javax.persistence.*
 @Entity
 @Table(name = "ratings")
 data class Rating(
-
+    @PrimaryKeyJoinColumn
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id:Int,
     @Column(name = "joke_guid", nullable = false)
@@ -20,5 +21,7 @@ data class Rating(
     var guid:UUID = UUID.randomUUID(),
     @Column(name = "user_guid", nullable = false)
     var userGUID:String?,
-    var opinion:Boolean
+    @Convert(converter = IntegerToBooleanConverter::class)
+    @Column(name = "opinion", nullable = true)
+    var opinion:Boolean?
 )
