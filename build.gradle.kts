@@ -35,6 +35,8 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation("com.squareup.retrofit2:converter-jackson:2.1.0")
     implementation("io.github.cdimascio:dotenv-kotlin:6.2.2")
+    implementation("org.flywaydb:flyway-core:7.6.0")
+
 //    implementation("com.rabbitmq:amqp-client:5.11.0")
 //    implementation("org.springframework.amqp:spring-amqp:2.3.5")
     implementation("org.springframework.amqp:spring-rabbit:2.3.5")
