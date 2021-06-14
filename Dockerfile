@@ -1,4 +1,4 @@
-FROM gradle:latest as builder
+FROM gradle:6 as builder
 WORKDIR /usr/src/app
 COPY src ./src
 COPY build.gradle.kts .
